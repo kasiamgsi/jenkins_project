@@ -17,7 +17,7 @@ spec:
   spec:
    containers:
    - name: myapp
-     image: aryas13/jenkins_project:tagversion
+     image: ameintu/devops:tagversion
      ports:
      - containerPort: 8080
 
