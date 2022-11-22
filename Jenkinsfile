@@ -5,9 +5,9 @@ pipeline {
 	}
 	
 	environment {
-		PROJECT_ID = 'i-monolith-366616'
+		PROJECT_ID = 'ci-project-369314'
         CLUSTER_NAME = 'cluster-1'
-        LOCATION = 'us-east1-c'
+        LOCATION = 'us-central1-c'
         CREDENTIALS_ID = 'kubernetes'		
 	}
 	
@@ -33,9 +33,10 @@ pipeline {
 	    
 	    stage('Build Docker Image') {
 		    steps {
+				echo "Building image on private DockerHub repo"
 			    sh 'whoami'
 			    script {
-				    myimage = docker.build("aryas13/jenkins_project:${env.BUILD_ID}")
+				    myimage = docker.build("g0loom/jenkins_project:${env.BUILD_ID}")
 			    }
 		    }
 	    }
@@ -45,7 +46,7 @@ pipeline {
 			    script {
 				    echo "Push Docker Image"
 				    withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
-            				sh "docker login -u aryas13 -p ${dockerhub}"
+            				sh "docker login -u g0loom -p ${dockerhub}"
 				    }
 				        myimage.push("${env.BUILD_ID}")
 				    
